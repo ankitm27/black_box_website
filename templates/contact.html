@@ -1,0 +1,39 @@
+<!-- Container (Contact Section) -->
+  <!-- <img src="https://photos.google.com/share/AF1QipM5Sj0MVFaEsKD8uzzIkFHf9nN2kqVIGPDQWaEA4GEF97yQjJJDBJyzuWcaoHeL6A/photo/AF1QipNAczgpFf0AsORTpzUSfhk3o8mDTamXQm4s5rGm?key=THdoak1OY3pIYUt5UFUydUxSYU5XVHhtS2xtVzl3" alt="" /> -->
+<img src="https://lh3.googleusercontent.com/DejuqXwFSCdsscQ0YmQv2Far2hw1EwZwUqxbUByCQC5paRoRRC3CXGCIw2ao8EP3VKYBpTcyH-Xes4NuEkMqAUuAelA_OJaQjOnkSZecW3f3E4cPs29VK0zrXQCRQgzcsEUkJDPpeSE3dAr1o26Tu15Pszp4zStUjniSq0O1f0YnDLb4w0pZeuuKcNZS7pOmjxpHhqyjudWJ0i9whgkIhJ4G4vFqrGbf3gJ-eigzhuUN3r4d-ISsbdzhrYfeMfoarsQiwTcy51QRjBxIfKisE1RKfOuG6jojzG-D3aTysOAA3VxGOIJPrm_L5xLiXQiXHVQxZATwbTpwkFjDzH-f4ysUz9XaHg6as-zM7AgNXoRe4rQhUOnpX3vkjqOjGjRAzBpRoqz32Of2BiOTDaFf3A8cpuPCaTVDTaXv1SVvD8R0F8yzR4_cpAlcHcEZG9XpcIr2COG2-_261Jc9LpYm5_KOZEj82_WzX-7jmvN91n99f-9yWsEmtKnrDVZbcgrlQsmmRAMPm30xEFhwWoW9eahvKgHnBaJi--OUPKpk99M7y2WkrNb-l7s3Kxqn-pcTh4SyZSnx_scvOhky8vt17ePjnolO9Q=w1361-h460-no" alt="kiet_map" class="overlap" style="height:500px;width:100%;"/>
+
+<div id="contact" class="container fadein" style="color:#2d2d30;">
+  <div class="col-md-12">
+    <h3 class="text-center" style="color:#2d2d30;">Contact</h3>
+    <p class="text-center" style="color:#2d2d30;"><em>We wish security for customers!</em></p>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <p>Feedback? Drop a note.</p>
+      <p><span class="glyphicon glyphicon-map-marker"></span>Ghaziabad, India</p>
+      <p><span class="glyphicon glyphicon-phone"></span>Phone: +00 1515151515</p>
+      <p><span class="glyphicon glyphicon-envelope"></span>Email: mail@mail.com</p>
+    </div>
+    <div class="col-md-8">
+      <form class="ContactForm" action="/contact/" method="post">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-sm-6 form-group">
+            <input class="form-control" id="name" name="name" placeholder="Name" type="text" required="required">
+          </div>
+          <div class="col-sm-6 form-group">
+            <input class="form-control" id="email" name="email" placeholder="Email" type="email" required="required">
+          </div>
+        </div>
+        <textarea class="form-control" id="comments" name="message" placeholder="Comment" rows="5" required="required"></textarea>
+        <br>
+        <div class="row">
+          <div class="col-md-12 form-group">
+            <button class="btn pull-right" type="submit">Send</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <br>
+</div>

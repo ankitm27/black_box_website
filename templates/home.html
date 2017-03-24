@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block style %}
+  {% if user.is_authenticated %}
+  {% else %}
+  <style media="screen">
+  .footer{
+    position: relative;
+  }
+  </style>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+<div class="col-md-12" style="min-height:600px;background-color:white;font: 400 15px/1 Lato, sans-serif;">
+  <br><br><br><br>
+  <div class="col-md-9">
+    <h1 class="lead"></h1>
+    <div class="col-md-12" id="googleMap" style="width:100%;height:500px;border: 1px solid #333;">
+    </div>
+  </div>
+  <div class="col-md-3" id="alcoholmeter">
+    <h1 class="lead">Alcohal Meter <span class="glyphicon glyphicon-refresh" style="float:right;cursor:pointer;" id="refresh"></span></h1>
+    <input type="text" id="speedometer" value="{{speedometer}}" hidden="hidden">
+    <input type="text" id="lat" value="{{latitude}}" hidden="hidden">
+    <input type="text" id="long" value="{{longitude}}" hidden="hidden">
+    <input id="myValues" hidden="hidden"/>
+  </div>
+</div>
+<script src="http://maps.googleapis.com/maps/api/js"></script>
+<script>
+// csrf finder
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
+$("#myValues").myfunc({divFact:10,eventListenerType:'change'});
+
+//jquery
+$(document).ready(function(){
+  var val = $('#speedometer').val();
+  $("#myValues").val(val).trigger('change');
+
+  var lat = $('#lat').val();
+  var long = $('#long').val();
+  console.log(lat);
+  console.log(long);
+  var map;
+  var start_position = new google.maps.LatLng(lat,long);
+  var mapProp;
+  var variable_marker;
+  var polyOptions = {
+      strokeColor: '#000000',
+      strokeOpacity: 1.0,
+      strokeWeight: 3
+  }
+  var flightPath;
+  var path = [];
+  path.push(start_position);
+
+  var csrftoken = getCookie('csrftoken');
+  //map api
+  function initialize() {
+    mapProp = {
+      center:start_position,
+      zoom:10,
+      mapTypeId:google.maps.MapTypeId.ROADMAP
+    };
+
+    map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+    var initial_marker=new google.maps.Marker({
+      position:start_position,
+    })
+    initial_marker.setMap(map);
+    variable_marker=new google.maps.Marker({
+      animation:google.maps.Animation.BOUNCE
+    })
+    variable_marker.setMap(map);
+      flightPath = new google.maps.Polyline({
+      path:path,
+      strokeColor:"#0000FF",
+      strokeOpacity:0.8,
+      strokeWeight:2
+    });
+    flightPath.setMap(map);
+  }
+  function getAjax(){
+    $.ajax({
+      type: 'POST',
+      url :'/',
+      data: {
+        csrfmiddlewaretoken: csrftoken,
+      },
+      success: function(data){
+        var speed =data.speed;
+        var lat = data.latitude;
+        var long = data.longitude;
+        var position = new google.maps.LatLng(lat, long);
+        console.log(lat);
+        console.log(long);
+        $("#myValues").val(speed).trigger('change');
+        variable_marker.setPosition(position);
+        path.push(position);
+        console.log(path);
+        flightPath.setPath(path);
+        map.setCenter(position);
+      }
+    });
+  }
+  $('#refresh').click(function(){
+    getAjax();
+  });
+	setInterval(function(){
+    getAjax();
+	}, 30000);
+  google.maps.event.addDomListener(window, 'load', initialize);
+})
+</script>
+
+{% else %}
+{% include 'carousel.html' %}
+{% include 'about.html' %}
+{% include 'security.html' %}
+{% include 'contact.html' %}
+
+<!-- Add Google Maps -->
+<script src="{% static 'js/map-api.js' %}"></script>
+<script src="{% static 'js/map-config.js' %}"></script>
+{% endif %}
+{% endblock %}

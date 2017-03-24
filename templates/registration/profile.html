@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<br/><br/><br/>
+<div class="div-md-12" style="min-height:700px;">
+  <div class="col-md-3"></div>
+  <div class="col-md-6" style="border:1px solid #eeeeee">
+    {% if error %}
+      <div class="alert alert-danger">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <p>{{ error }}</p>
+      </div>
+    {% endif %}
+    <h1 class="lead">Profile</h1>
+    <form role="form" method="post" action="">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" value="{{ user }}" id="username" name="username" placeholder="Username" readonly="readonly">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" value="{%if email %}{{ email }}{% endif %}" id="email" name="email" placeholder="Email" required="required">
+      </div>
+      <div class="form-group">
+        <label for="firstname">Firstname</label>
+        <input type="text" class="form-control" value="{%if firstname %}{{ firstname }}{% endif %}" id="firstname" name="firstname" placeholder="Firstname">
+      </div>
+      <div class="form-group">
+        <label for="lastname">Lastname</label>
+        <input type="text" class="form-control" value="{%if lastname %}{{ lastname }}{% endif %}" id="lastname" name="lastname" placeholder="Lastname">
+      </div>
+      <div class="form-group">
+        <label for="dob">Date of Birth</label>
+        <input type="date" class="form-control" value="{{dob.year}}-{{dob.month}}-{{dob.day}}" id="dob" name="dob" placeholder="Date of Birth">
+      </div>
+      <div class="form-group">
+        <label for="gender">Gender</label>
+        <select class="form-control" id="gender" name="gender">
+          <option value="" {% if gender == "" %}selected="selected"{% endif %} disabled="disabled">Select Gender</option>
+          <option value"Male" {% if gender == "Male" %}selected="selected"{% endif %}>Male</option>
+          <option value="Female" {% if gender == "Female" %}selected="selected"{% endif %}>Female</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button><br/><br/>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+<div class="container-fluid">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/#myCarousel">Track U</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'home' %}">HOME</a></li>
+        {% else %}
+        <li><a href="/#myCarousel">HOME</a></li>
+        <li><a href="/#about">ABOUT</a></li>
+        <li><a href="/#security">FEATURES</a></li>
+        <li><a href="/#contact">CONTACT</a></li>
+        {% endif %}
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'profile' %}">PROFILE</a></li>
+          <li><a href="{% url 'change_password' %}">CHANGE PASSWORD</a></li>
+          <li><a href="{% url 'logout' %}">LOGOUT</a></li>
+        {% else %}
+          <li><a href="{% url 'register' %}">REGISTER</a></li>
+          <li><a href="{% url 'login' %}">LOG IN</a></li>
+        {% endif %}
+        <span style="margin-right:30px;"></span>
+      </ul>
+    </div>
+  </div>
+</nav>

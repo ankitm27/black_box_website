@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<div class="col-md-12" style="min-height:600px;background-color:white;">
+  <br><br>
+  <h2>Inactivate User</h2>
+  {% if inactive_users %}
+  <p>Inactive users are:</p>
+  <form class="" action="{% url 'activation' %}" method="post" id="form">
+    {% csrf_token %}
+
+    <table class="table table-bordered">
+      <thead>
+        <tr style="height:70px;font-size:130%;">
+          <th>S No.</th>
+          <th>Username</th>
+          <th>EMI Number</th>
+          <th>Subscription</th>
+          <th>Activate One</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for inactive_user in inactive_users %}
+          <tr>
+            <th>{{ inactive_user.s_no }} .</th>
+            <td><div class="form-group"><input type="text" class="form-control user" name="username" value="{{ inactive_user.username }}" id="{{inactive_user.s_no}}user" readonly="readonly"/></div></td>
+            <td><div class="form-group"><input type="text" class="form-control emi" name="emi" placeholder="EMI Number" id="{{ inactive_user.s_no }}emi"/></div></td>
+            <td>
+              <div class="form-group">
+                <select class="form-control sub" name="sub" id="{{inactive_user.s_no}}sub">
+                  <option value="0" selected="selected">0 day</option>
+                  <option value="15">15 days</option>
+                  <option value="30">30 days</option>
+                  <option value="90">90 days</option>
+                  <option value="180">180 days</option>
+                  <option value="360">360 days</option>
+                </select>
+              </div>
+            </td>
+            <td><div class="checkbox"><label><input type="checkbox" value="{{ inactive_user.username }}" name="check" id="{{inactive_user.s_no}}" class="check">Activate</label></div></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <button type="submit" class="btn btn-default" id="activate_all">Activate All</button>
+  </form>
+  {% else %}
+
+    <div class="col-md-3"></div>
+    <div class="col-md-6" style="border: 1px solid #333;margin-top:150px;">
+      <br>
+      <center><p class="lead">No inactive users exists.</p></center>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Track U</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link href="{% static 'css/fontfamilyLato.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css/fontfamilyMontserrat.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css/speedometer.css' %}" rel="stylesheet" type="text/css" />
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/speedometer.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/custom.js' %}"></script>
+  <script src="{% static 'js/activation.js' %}"></script>
+  <link href="{% static 'css/theme.css' %}" rel="stylesheet" type="text/css">
+  <style media="screen">
+    .overlap{
+      top:2550px;
+      position: absolute;
+      opacity: 0.6;
+    }
+    .fadein,.fadeinimg{
+      opacity: 0;
+    }
+  </style>
+  {% block style %}
+  {% endblock %}
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+  {% include 'navbar.html' %}
+    {% block content %}
+    {% endblock%}
+  {% include 'footer.html' %}
+  <script src="{% static 'js/theme.js' %}"></script>
+  {% block script %}
+  {% endblock %}
+</body>
+</html>
